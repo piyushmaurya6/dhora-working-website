@@ -11,6 +11,43 @@ note that this may have impact on different places.
   {%- assign text_font_bold = settings.text_font | font_modify: 'weight', 'bolder' -%}
   {%- assign text_font_bold_italic = text_font_bold | font_modify: 'style', 'italic' -%}
 
+  /* Custom Fonts from assets/fonts */
+  @font-face {
+    font-family: 'Canela';
+    src: url("{{ 'fonts/Canela-Regular.woff2' | asset_url }}") format('woff2'),
+         url("{{ 'Canela-Regular.woff2' | asset_url }}") format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Canela';
+    src: url("{{ 'fonts/canela Bold.woff2' | asset_url }}") format('woff2'),
+         url("{{ 'canela Bold.woff2' | asset_url }}") format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Geist Mono';
+    src: url("{{ 'fonts/Geist Mono.woff2' | asset_url }}") format('woff2'),
+         url("{{ 'Geist Mono.woff2' | asset_url }}") format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Geist Mono';
+    src: url("{{ 'fonts/Geist Mono Medium.woff2' | asset_url }}") format('woff2'),
+         url("{{ 'Geist Mono Medium.woff2' | asset_url }}") format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
   /* Typography (heading) */
   {{ settings.heading_font | font_face: font_display: 'fallback' }}
 
@@ -74,12 +111,12 @@ note that this may have impact on different places.
      */
 
     /* Font properties */
-    --heading-font-family: {{ settings.heading_font.family }}, {{ settings.heading_font.fallback_families }};
+    --heading-font-family: 'Canela', {{ settings.heading_font.family }}, {{ settings.heading_font.fallback_families }}, serif;
     --heading-font-weight: {{ settings.heading_font.weight }};
     --heading-font-style: {{ settings.heading_font.style }};
     --heading-text-transform: {{ settings.heading_text_transform }};
     --heading-letter-spacing: {% if language_code == 'ar' %}0{% else %}{{ settings.heading_letter_spacing | divided_by: 100.0 }}{% endif %}em;
-    --text-font-family: {{ settings.text_font.family }}, {{ settings.text_font.fallback_families }};
+    --text-font-family: 'Geist Mono', {{ settings.text_font.family }}, {{ settings.text_font.fallback_families }}, monospace, sans-serif;
     --text-font-weight: {{ settings.text_font.weight }};
     --text-font-style: {{ settings.text_font.style }};
     --text-letter-spacing: {% if language_code == 'ar' %}0{% else %}{{ settings.text_font_letter_spacing | divided_by: 100.0 }}{% endif %}em;
