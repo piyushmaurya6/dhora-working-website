@@ -1,0 +1,394 @@
+<style>
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | default: 32 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 32 }}px;
+  }
+
+  #shopify-section-{{ section.id }} .three-products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .three-products-grid {
+      gap: 2rem;
+      max-width: 1200px;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .three-products-tile {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    text-align: center;
+    background: transparent;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    height: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .three-products-tile:hover {
+    opacity: 0.9;
+  }
+
+  #shopify-section-{{ section.id }} .three-products-tile__image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #shopify-section-{{ section.id }} .three-products-tile__image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  #shopify-section-{{ section.id }} .three-products-tile:hover .three-products-tile__image-wrapper img {
+    transform: scale(1.03);
+  }
+
+  #shopify-section-{{ section.id }} .three-products-tile__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+  }
+
+  #shopify-section-{{ section.id }} .three-products-tile__placeholder svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  /* Information container below each product tile image */
+  #shopify-section-{{ section.id }} .three-products-tile__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 0.75rem;
+    padding-bottom: 0.25rem;
+    flex-grow: 1;
+  }
+
+  #shopify-section-{{ section.id }} .three-products-tile__vendor {
+    font-family: var(--text-font-family);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    margin-bottom: 0.2rem;
+  }
+
+  #shopify-section-{{ section.id }} .three-products-tile__title {
+    font-family: var(--text-font-family);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.25;
+    margin: 0 0 0.35rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: inherit;
+    word-break: break-word;
+  }
+
+  #shopify-section-{{ section.id }} .three-products-tile__price {
+    font-family: var(--text-font-family);
+    font-size: 0.75rem;
+    font-weight: 400;
+    opacity: 0.85;
+    margin-bottom: 0.25rem;
+  }
+
+  #shopify-section-{{ section.id }} .three-products-heading {
+    letter-spacing: 0.2em;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Mobile Responsive Tweaks for 425px & smaller */
+  @media screen and (max-width: 699px) {
+    #shopify-section-{{ section.id }} .three-products-grid {
+      gap: 0.35rem;
+    }
+    #shopify-section-{{ section.id }} .three-products-tile__info {
+      padding-top: 0.5rem;
+    }
+    #shopify-section-{{ section.id }} .three-products-tile__title {
+      font-size: 0.62rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.2rem;
+    }
+    #shopify-section-{{ section.id }} .three-products-tile__price {
+      font-size: 0.62rem;
+    }
+    #shopify-section-{{ section.id }} .three-products-tile__vendor {
+      font-size: 0.5rem;
+    }
+    #shopify-section-{{ section.id }} .three-products-heading {
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+      letter-spacing: 0.15em;
+    }
+  }
+</style>
+
+{%- assign color_scheme_hash = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background | md5 -%}
+
+<div class="section-spacing color-scheme color-scheme--{{ section.settings.color_scheme.id }} color-scheme--bg-{{ color_scheme_hash }} {% if section.settings.separate_section_with_border %}bordered-section{% endif %}">
+  <div class="container">
+    <div class="section-stack">
+      {%- if section.settings.title != blank or section.settings.subheading != blank -%}
+        <div class="v-stack justify-self-center gap-2 text-center">
+          {%- if section.settings.subheading != blank -%}
+            <p class="h6 text-center">{{ section.settings.subheading | escape }}</p>
+          {%- endif -%}
+
+          {%- if section.settings.title != blank -%}
+            <h2 class="three-products-heading">{{ section.settings.title | escape }}</h2>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="three-products-grid">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks limit: 3 -%}
+            {%- assign p = block.settings.product -%}
+            {%- assign tile_link = block.settings.custom_url | default: p.url | default: '#' -%}
+            
+            <a href="{{ tile_link }}" class="three-products-tile" {{ block.shopify_attributes }}>
+              <div class="three-products-tile__image-wrapper">
+                {%- if block.settings.custom_image != blank -%}
+                  <img src="{{ block.settings.custom_image | image_url: width: 600 }}" alt="{{ block.settings.custom_title | default: p.title | escape }}" loading="lazy">
+                {%- elsif p != blank and p.featured_media -%}
+                  <img src="{{ p.featured_media | image_url: width: 600 }}" alt="{{ p.title | escape }}" loading="lazy">
+                {%- else -%}
+                  <div class="three-products-tile__placeholder">
+                    {%- assign placeholder_idx = forloop.index | modulo: 6 | plus: 1 -%}
+                    {{ 'product-' | append: placeholder_idx | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                {%- endif -%}
+              </div>
+
+              {%- unless section.settings.hide_product_information -%}
+                <div class="three-products-tile__info">
+                  {%- if section.settings.show_vendor -%}
+                    <div class="three-products-tile__vendor">
+                      {{ block.settings.custom_vendor | default: p.vendor | default: 'DHORA' }}
+                    </div>
+                  {%- endif -%}
+
+                  <h3 class="three-products-tile__title">
+                    {%- if block.settings.custom_title != blank -%}
+                      {{ block.settings.custom_title }}
+                    {%- elsif p != blank -%}
+                      {{ p.title }}
+                    {%- else -%}
+                      RECOMMENDED PRODUCT {{ forloop.index }}
+                    {%- endif -%}
+                  </h3>
+
+                  <div class="three-products-tile__price">
+                    {%- if block.settings.custom_price != blank -%}
+                      {{ block.settings.custom_price }}
+                    {%- elsif p != blank -%}
+                      {{ p.price | money }}
+                    {%- else -%}
+                      {{ 4999 | money }}
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endunless -%}
+            </a>
+          {%- endfor -%}
+
+        {%- elsif section.settings.products != blank -%}
+          {%- for p in section.settings.products limit: 3 -%}
+            <a href="{{ p.url }}" class="three-products-tile">
+              <div class="three-products-tile__image-wrapper">
+                {%- if p.featured_media -%}
+                  <img src="{{ p.featured_media | image_url: width: 600 }}" alt="{{ p.title | escape }}" loading="lazy">
+                {%- else -%}
+                  <div class="three-products-tile__placeholder">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                {%- endif -%}
+              </div>
+
+              {%- unless section.settings.hide_product_information -%}
+                <div class="three-products-tile__info">
+                  {%- if section.settings.show_vendor -%}
+                    <div class="three-products-tile__vendor">{{ p.vendor }}</div>
+                  {%- endif -%}
+
+                  <h3 class="three-products-tile__title">{{ p.title }}</h3>
+                  <div class="three-products-tile__price">{{ p.price | money }}</div>
+                </div>
+              {%- endunless -%}
+            </a>
+          {%- endfor -%}
+
+        {%- else -%}
+          {%- for i in (1..3) -%}
+            <div class="three-products-tile">
+              <div class="three-products-tile__image-wrapper">
+                <div class="three-products-tile__placeholder">
+                  {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              </div>
+              <div class="three-products-tile__info">
+                <h3 class="three-products-tile__title">PRODUCT {{ i }}</h3>
+                <div class="three-products-tile__price">{{ 4999 | money }}</div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Three Static Product Tiles",
+  "class": "shopify-section--three-static-products",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "separate_section_with_border",
+      "label": "Separate section with border",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "RECOMMENDED"
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Products (Fallback selection)",
+      "limit": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_product_information",
+      "label": "Hide product information",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 32
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_tile",
+      "name": "Product Tile",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Shopify Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Image (Overrides product image)"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom Title (Overrides product title)"
+        },
+        {
+          "type": "text",
+          "id": "custom_price",
+          "label": "Custom Price (e.g. ₹2,999)"
+        },
+        {
+          "type": "text",
+          "id": "custom_vendor",
+          "label": "Custom Vendor"
+        },
+        {
+          "type": "url",
+          "id": "custom_url",
+          "label": "Custom Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Three Static Product Tiles",
+      "settings": {
+        "title": "RECOMMENDED"
+      },
+      "blocks": [
+        {
+          "type": "product_tile"
+        },
+        {
+          "type": "product_tile"
+        },
+        {
+          "type": "product_tile"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

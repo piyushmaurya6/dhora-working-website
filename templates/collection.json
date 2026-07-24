@@ -59,7 +59,7 @@
       }
     },
     "manual_product_slider_recommendations": {
-      "type": "manual-product-slider",
+      "type": "three-static-products",
       "blocks": {
         "product_1": {
           "type": "product_tile",
