@@ -62,19 +62,19 @@
       "type": "manual-product-slider",
       "blocks": {
         "product_1": {
-          "type": "product",
+          "type": "product_tile",
           "settings": {
             "product": ""
           }
         },
         "product_2": {
-          "type": "product",
+          "type": "product_tile",
           "settings": {
             "product": ""
           }
         },
         "product_3": {
-          "type": "product",
+          "type": "product_tile",
           "settings": {
             "product": ""
           }
