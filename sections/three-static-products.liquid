@@ -71,7 +71,7 @@
     opacity: 0.3;
   }
 
-  /* Information container below each product tile image */
+  /* Optional Information container (hidden by default unless explicitly enabled) */
   #shopify-section-{{ section.id }} .three-products-tile__info {
     display: flex;
     flex-direction: column;
@@ -116,20 +116,6 @@
     #shopify-section-{{ section.id }} .three-products-grid {
       gap: 0.35rem;
     }
-    #shopify-section-{{ section.id }} .three-products-tile__info {
-      padding-top: 0.5rem;
-    }
-    #shopify-section-{{ section.id }} .three-products-tile__title {
-      font-size: 0.62rem;
-      letter-spacing: 0.02em;
-      margin-bottom: 0.2rem;
-    }
-    #shopify-section-{{ section.id }} .three-products-tile__price {
-      font-size: 0.62rem;
-    }
-    #shopify-section-{{ section.id }} .three-products-tile__vendor {
-      font-size: 0.5rem;
-    }
   }
 </style>
 
@@ -158,7 +144,7 @@
                 {%- endif -%}
               </div>
 
-              {%- unless section.settings.hide_product_information -%}
+              {%- if section.settings.show_product_information -%}
                 <div class="three-products-tile__info">
                   {%- if section.settings.show_vendor -%}
                     <div class="three-products-tile__vendor">
@@ -166,27 +152,19 @@
                     </div>
                   {%- endif -%}
 
-                  <h3 class="three-products-tile__title">
-                    {%- if block.settings.custom_title != blank -%}
-                      {{ block.settings.custom_title }}
-                    {%- elsif p != blank -%}
-                      {{ p.title }}
-                    {%- else -%}
-                      PRODUCT {{ forloop.index }}
-                    {%- endif -%}
-                  </h3>
+                  {%- if block.settings.custom_title != blank or p != blank -%}
+                    <h3 class="three-products-tile__title">
+                      {{ block.settings.custom_title | default: p.title }}
+                    </h3>
+                  {%- endif -%}
 
-                  <div class="three-products-tile__price">
-                    {%- if block.settings.custom_price != blank -%}
-                      {{ block.settings.custom_price }}
-                    {%- elsif p != blank -%}
-                      {{ p.price | money }}
-                    {%- else -%}
-                      {{ 4999 | money }}
-                    {%- endif -%}
-                  </div>
+                  {%- if block.settings.custom_price != blank or p != blank -%}
+                    <div class="three-products-tile__price">
+                      {{ block.settings.custom_price | default: p.price | money }}
+                    </div>
+                  {%- endif -%}
                 </div>
-              {%- endunless -%}
+              {%- endif -%}
             </a>
           {%- endfor -%}
 
@@ -203,7 +181,7 @@
                 {%- endif -%}
               </div>
 
-              {%- unless section.settings.hide_product_information -%}
+              {%- if section.settings.show_product_information -%}
                 <div class="three-products-tile__info">
                   {%- if section.settings.show_vendor -%}
                     <div class="three-products-tile__vendor">{{ p.vendor }}</div>
@@ -212,7 +190,7 @@
                   <h3 class="three-products-tile__title">{{ p.title }}</h3>
                   <div class="three-products-tile__price">{{ p.price | money }}</div>
                 </div>
-              {%- endunless -%}
+              {%- endif -%}
             </a>
           {%- endfor -%}
 
@@ -223,10 +201,6 @@
                 <div class="three-products-tile__placeholder">
                   {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
                 </div>
-              </div>
-              <div class="three-products-tile__info">
-                <h3 class="three-products-tile__title">PRODUCT {{ i }}</h3>
-                <div class="three-products-tile__price">{{ 4999 | money }}</div>
               </div>
             </div>
           {%- endfor -%}
@@ -265,14 +239,14 @@
     },
     {
       "type": "checkbox",
-      "id": "show_vendor",
-      "label": "Show vendor",
+      "id": "show_product_information",
+      "label": "Show product information (Titles & Prices)",
       "default": false
     },
     {
       "type": "checkbox",
-      "id": "hide_product_information",
-      "label": "Hide product information",
+      "id": "show_vendor",
+      "label": "Show vendor",
       "default": false
     },
     {
@@ -314,12 +288,12 @@
         {
           "type": "text",
           "id": "custom_title",
-          "label": "Custom Title (Overrides product title)"
+          "label": "Custom Title"
         },
         {
           "type": "text",
           "id": "custom_price",
-          "label": "Custom Price (e.g. ₹2,999)"
+          "label": "Custom Price"
         },
         {
           "type": "text",
