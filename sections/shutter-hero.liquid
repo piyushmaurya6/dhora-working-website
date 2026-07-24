@@ -1,0 +1,281 @@
+<style>
+  #shopify-section-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    z-index: 5;
+  }
+
+  #shopify-section-{{ section.id }} .shutter-hero {
+    position: relative;
+    width: 100%;
+    height: 400vh; /* 100vh per image slide track */
+  }
+
+  #shopify-section-{{ section.id }} .shutter-sticky {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #000000;
+  }
+
+  #shopify-section-{{ section.id }} .shutter-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+    transform: translate3d(0, 100%, 0);
+    transition: transform 0.05s linear;
+    overflow: hidden;
+  }
+
+  /* First panel starts visible at 0% */
+  #shopify-section-{{ section.id }} .shutter-panel:first-child {
+    transform: translate3d(0, 0%, 0);
+  }
+
+  #shopify-section-{{ section.id }} .shutter-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  /* Overlay gradient & content on panels */
+  #shopify-section-{{ section.id }} .shutter-panel__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.5) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 3rem 1.5rem;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .shutter-panel__title {
+    font-family: var(--heading-font-family, serif);
+    font-size: clamp(1.8rem, 4vw, 3.5rem);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+
+  #shopify-section-{{ section.id }} .shutter-panel__subheading {
+    font-family: var(--text-font-family, monospace);
+    font-size: clamp(0.75rem, 1.5vw, 1rem);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.9;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+  }
+
+  #shopify-section-{{ section.id }} .shutter-scroll-indicator {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    color: #ffffff;
+    font-family: var(--text-font-family, monospace);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    pointer-events: none;
+    opacity: 0.85;
+    animation: shutterPulse 2s infinite ease-in-out;
+  }
+
+  #shopify-section-{{ section.id }} .shutter-scroll-indicator svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  @keyframes shutterPulse {
+    0%, 100% { opacity: 0.5; transform: translate(-50%, 0); }
+    50% { opacity: 1; transform: translate(-50%, 6px); }
+  }
+</style>
+
+<div class="shutter-hero" id="ShutterHero-{{ section.id }}">
+  <div class="shutter-sticky">
+    {%- for block in section.blocks limit: 4 -%}
+      {%- assign img_url = block.settings.image_url -%}
+      {%- if img_url == blank and block.settings.image != blank -%}
+        {%- assign img_url = block.settings.image | image_url: width: 2000 -%}
+      {%- endif -%}
+
+      <div class="shutter-panel" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+        {%- if img_url != blank -%}
+          <img src="{{ img_url }}" alt="{{ block.settings.title | escape }}" loading="eager">
+        {%- else -%}
+          {%- assign placeholder_idx = forloop.index | modulo: 6 | plus: 1 -%}
+          {{ 'lifestyle-' | append: placeholder_idx | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+
+        {%- if block.settings.title != blank or block.settings.subheading != blank -%}
+          <div class="shutter-panel__overlay">
+            {%- if block.settings.subheading != blank -%}
+              <div class="shutter-panel__subheading">{{ block.settings.subheading }}</div>
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}
+              <h2 class="shutter-panel__title">{{ block.settings.title }}</h2>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+
+    <div class="shutter-scroll-indicator" id="ShutterIndicator-{{ section.id }}">
+      <span>SCROLL DOWN</span>
+      <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    function initShutterHero() {
+      const hero = document.getElementById('ShutterHero-{{ section.id }}');
+      if (!hero) return;
+
+      const panels = hero.querySelectorAll('.shutter-panel');
+      const indicator = document.getElementById('ShutterIndicator-{{ section.id }}');
+      const count = panels.length;
+
+      if (count <= 1) return;
+
+      function onScroll() {
+        const rect = hero.getBoundingClientRect();
+        const scrollableDistance = hero.offsetHeight - window.innerHeight;
+
+        if (scrollableDistance <= 0) return;
+
+        // Progress from 0 to 1
+        let progress = -rect.top / scrollableDistance;
+        progress = Math.max(0, Math.min(1, progress));
+
+        // Hide scroll indicator when user scrolls past 80%
+        if (indicator) {
+          indicator.style.opacity = progress > 0.85 ? '0' : '0.85';
+        }
+
+        // Calculate progress for each panel (panels 1, 2, 3 slide from translateY 100% to 0%)
+        // Panel 0 is base (always 0 translateY)
+        const step = 1 / (count - 1);
+
+        for (let i = 1; i < count; i++) {
+          const start = (i - 1) * step;
+          const end = i * step;
+
+          if (progress <= start) {
+            panels[i].style.transform = 'translate3d(0, 100%, 0)';
+          } else if (progress >= end) {
+            panels[i].style.transform = 'translate3d(0, 0%, 0)';
+          } else {
+            const panelProgress = (progress - start) / (end - start);
+            const translateY = (1 - panelProgress) * 100;
+            panels[i].style.transform = `translate3d(0, ${translateY}%, 0)`;
+          }
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      onScroll();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initShutterHero);
+    } else {
+      initShutterHero();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Shutter Hero Scroll",
+  "class": "shopify-section--shutter-hero",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "custom.overlay"]
+  },
+  "settings": [],
+  "blocks": [
+    {
+      "type": "shutter_image",
+      "name": "Shutter Image",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Select Image"
+        },
+        {
+          "type": "text",
+          "id": "image_url",
+          "label": "Direct Image URL (e.g. Shopify CDN URL)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shutter Hero Scroll",
+      "blocks": [
+        {
+          "type": "shutter_image",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0786/6204/1789/files/Blue_turban_boy_medium_height_202607211756.jpg?v=1784889397"
+          }
+        },
+        {
+          "type": "shutter_image",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0786/6204/1789/files/ChatGPT_Image_Jul_21_2026_06_16_57_PM.png?v=1784889397"
+          }
+        },
+        {
+          "type": "shutter_image",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0786/6204/1789/files/ChatGPT_Image_Jul_21_2026_06_04_33_PM.png?v=1784889397"
+          }
+        },
+        {
+          "type": "shutter_image",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0786/6204/1789/files/ChatGPT_Image_Jul_21_2026_06_04_33_PM.png?v=1784889397"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

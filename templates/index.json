@@ -1,5 +1,48 @@
-{
   "sections": {
+    "shutter_hero_intro": {
+      "type": "shutter-hero",
+      "blocks": {
+        "shutter_img_1": {
+          "type": "shutter_image",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0786/6204/1789/files/Blue_turban_boy_medium_height_202607211756.jpg?v=1784889397",
+            "title": "",
+            "subheading": ""
+          }
+        },
+        "shutter_img_2": {
+          "type": "shutter_image",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0786/6204/1789/files/ChatGPT_Image_Jul_21_2026_06_16_57_PM.png?v=1784889397",
+            "title": "",
+            "subheading": ""
+          }
+        },
+        "shutter_img_3": {
+          "type": "shutter_image",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0786/6204/1789/files/ChatGPT_Image_Jul_21_2026_06_04_33_PM.png?v=1784889397",
+            "title": "",
+            "subheading": ""
+          }
+        },
+        "shutter_img_4": {
+          "type": "shutter_image",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0786/6204/1789/files/ChatGPT_Image_Jul_21_2026_06_04_33_PM.png?v=1784889397",
+            "title": "",
+            "subheading": ""
+          }
+        }
+      },
+      "block_order": [
+        "shutter_img_1",
+        "shutter_img_2",
+        "shutter_img_3",
+        "shutter_img_4"
+      ],
+      "settings": {}
+    },
     "16387793590495b4e1": {
       "type": "slideshow",
       "blocks": {
@@ -476,6 +519,7 @@
     }
   },
   "order": [
+    "shutter_hero_intro",
     "16387793590495b4e1",
     "collection_list_xrLzEX",
     "featured-collections",
