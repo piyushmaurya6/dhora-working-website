@@ -1,0 +1,218 @@
+<style>
+.disocunt-parent-div {
+    display: flex;
+    flex-direction: column;
+}
+            .disocunt-parent-div div{
+             display: flex;
+    align-items:center;
+            }
+             .disocunt-parent-div div img{
+            margin-right:10px;
+               width:20px;
+            }
+         .disocunt-parent-div div p {
+    line-height: 25px;
+    font-size: 15px;
+           margin:0;
+}
+  .term-content{
+    font-size:10px!important;
+   
+  }
+     .copy-btn-class{
+  
+     font-weight:600;
+     font-size:14px;
+       cursor:pointer;
+       border:none;
+       background:transparent;
+       color:#000;
+       padding:0;
+       
+   }
+
+   .copybtn1{
+      cursor:pointer;
+       border:none;
+       background:transparent;
+       padding:0;
+  }
+
+  .copybtn {
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    background: transparent;
+    color: #000;
+}
+
+   .copybtn:hover , .copy-btn-class:hover{
+     background-color:transparent!important;
+     color:#000!important;
+   }
+
+.cp-text .copybtn svg{
+  height:15px!important;
+    margin-left: -5px;
+    font-weight: 600;
+    font-size: 12px;
+  color:#000;
+}
+
+  .disocunt-parent-div ul li{
+    list-style:disc!important;
+  }
+  
+
+.offer_code-text_list-title p{
+  margin-bottom:0px!important;
+}
+
+.offer_code-text_list-title{
+  margin-bottom:5px!important;
+}
+
+  /* code for available offer*/
+  
+/* .offer_code-text_list-title{
+  display:none;
+}
+.disocunt-parent-div{
+  display:none;
+} */
+
+  @media screen and (min-width: 1200px) {
+
+  .disocunt-parent-div div {
+    max-width: 390px;
+    width: 500px;
+}
+  }
+
+  
+    </style>
+
+  <div class="disocunt-parent-div product-block " style="color:">
+                      <ul style="padding-left:20px;margin:0;">
+
+                        <li>
+                    <div>
+                    
+                        
+                      <div>
+                      
+                         
+                         <p> Get this product for <b>
+                           
+                          ₹
+ <!-- {% if product.compare_at_price_max > product.price %}
+  {% assign discount_amount = product.price | minus: 10000 %}
+  {{ discount_amount | money_without_currency }}
+{% endif %} -->
+                           
+  {% assign discount_amount= product.price | times: 0.95 | remove: '.00' %}
+  {{ discount_amount | money_without_currency |  remove: '.00' }} 
+
+                           </b> Use Code: <strong><button id="copyButton" class="copy-btn-class" >FKEM</button></strong>     <span class="cp-text"> <button onclick="copyIt('FKEM')" class="copybtn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"/></svg> </button></span></p>
+              
+                      </div> 
+                     
+                    </div>
+
+
+</li>
+                   </ul>
+
+
+
+   
+                    
+                  </div>
+
+<script>
+    let copybtn1 = document.querySelector(".copybtn1");
+    
+    function copyIt1(textToCopy) {
+      // Create a temporary textarea element
+      let textarea = document.createElement("textarea");
+    
+      // Set the text content to the text you want to copy
+      textarea.value = textToCopy;
+    
+      // Append the textarea to the document
+      document.body.appendChild(textarea);
+    
+      // Select the text in the textarea
+      textarea.select();
+    
+      // Copy the text to the clipboard
+      document.execCommand("copy");
+    
+      // Remove the temporary textarea
+      document.body.removeChild(textarea);
+    
+      // Change button text to 'COPIED'
+      copybtn1.textContent = "COPIED";
+    }
+    </script>
+
+    <script>
+    let copybtn = document.querySelector(".copybtn");
+    
+    function copyIt(textToCopy) {
+      // Create a temporary textarea element
+      let textarea = document.createElement("textarea");
+    
+      // Set the text content to the text you want to copy
+      textarea.value = textToCopy;
+    
+      // Append the textarea to the document
+      document.body.appendChild(textarea);
+    
+      // Select the text in the textarea
+      textarea.select();
+    
+      // Copy the text to the clipboard
+      document.execCommand("copy");
+    
+      // Remove the temporary textarea
+      document.body.removeChild(textarea);
+    
+      // Change button text to 'COPIED'
+      copybtn.textContent = "COPIED";
+    }
+    </script>
+
+
+
+                  
+  <script>
+    function copyText(button) {
+      // Get the original text of the button
+      const originalText = button.innerText;
+
+      // Create a temporary textarea element
+      const tempTextArea = document.createElement('textarea');
+      tempTextArea.value = originalText;
+      document.body.appendChild(tempTextArea);
+
+      // Select the text in the textarea
+      tempTextArea.select();
+      tempTextArea.setSelectionRange(0, 99999); // For mobile devices
+
+      // Copy the text to the clipboard
+      document.execCommand('copy');
+
+      // Remove the temporary textarea element
+      document.body.removeChild(tempTextArea);
+
+      // Change the button text to "Copied!"
+      button.innerText = 'Copied!';
+      
+      // Reset the button text after a delay (e.g., 2 seconds)
+      // setTimeout(function () {
+      //   button.innerText = originalText;
+      // }, 2000);
+    }
+  </script>
