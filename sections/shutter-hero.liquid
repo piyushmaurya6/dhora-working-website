@@ -120,7 +120,7 @@
         {%- assign img_url = block.settings.image | image_url: width: 2000 -%}
       {%- endif -%}
 
-      <div class="shutter-panel" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+      <div class="shutter-panel" data-index="{{ forloop.index0 }}" style="z-index: {{ forloop.index }};" {{ block.shopify_attributes }}>
         {%- if img_url != blank -%}
           <img src="{{ img_url }}" alt="{{ block.settings.title | escape }}" loading="eager">
         {%- else -%}
