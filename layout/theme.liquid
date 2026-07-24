@@ -29,15 +29,11 @@
     {%- endif -%}
 
     {%- comment -%}Few prefetch to increase performance on commonly used third-parties{%- endcomment -%}
-    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-
-    {%- unless settings.heading_font.system? -%}
-      <link rel="preload" href="{{ settings.heading_font | font_url }}" as="font" type="font/woff2" crossorigin>
-    {%- endunless -%}
-
-    {%- unless settings.text_font.system? -%}
-      <link rel="preload" href="{{ settings.text_font | font_url }}" as="font" type="font/woff2" crossorigin>
-    {%- endunless -%}
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="preload" href="https://cdn.shopify.com/s/files/1/0786/6204/1789/files/Canela-Regular.woff2?v=1784883860" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://cdn.shopify.com/s/files/1/0786/6204/1789/files/canela_Bold.woff2?v=1784883860" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://cdn.shopify.com/s/files/1/0786/6204/1789/files/Geist_Mono.woff2?v=1784883860" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://cdn.shopify.com/s/files/1/0786/6204/1789/files/Geist_Mono_Medium.woff2?v=1784883859" as="font" type="font/woff2" crossorigin>
 
     {%- render 'social-meta-tags' -%}
     {%- render 'microdata-schema' -%}
