@@ -6,27 +6,56 @@
 
 <style>
   #shopify-section-{{ section.id }} .manual-grid-wrapper {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.5rem;
-    width: 100%;
-    align-items: start;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
   }
 
   @media screen and (min-width: 700px) {
     #shopify-section-{{ section.id }} .manual-grid-wrapper {
-      gap: 1.5rem;
+      gap: 1.25rem !important;
     }
   }
 
+  #shopify-section-{{ section.id }} .manual-grid-wrapper product-card,
   #shopify-section-{{ section.id }} .manual-grid-wrapper .product-card {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: 0 1 auto !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  #shopify-section-{{ section.id }} .manual-grid-wrapper .product-card__figure,
+  #shopify-section-{{ section.id }} .manual-grid-wrapper .product-card__media {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
+    display: block !important;
+    box-sizing: border-box !important;
   }
 
-  #shopify-section-{{ section.id }} .manual-grid-wrapper .product-card__figure {
-    width: 100%;
+  #shopify-section-{{ section.id }} .manual-grid-wrapper svg,
+  #shopify-section-{{ section.id }} .manual-grid-wrapper img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    object-fit: contain !important;
+  }
+
+  #shopify-section-{{ section.id }} .manual-grid-wrapper .product-card__info {
+    width: 100% !important;
+    min-width: 0 !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
   }
 
   #shopify-section-{{ section.id }} .manual-slider__heading {
@@ -37,15 +66,19 @@
   }
 
   @media screen and (max-width: 699px) {
+    #shopify-section-{{ section.id }} .manual-grid-wrapper {
+      gap: 0.35rem !important;
+    }
     #shopify-section-{{ section.id }} .product-card__info {
-      padding-top: 0.35rem;
+      padding-top: 0.35rem !important;
     }
     #shopify-section-{{ section.id }} .product-title {
-      font-size: 0.72rem;
-      line-height: 1.2;
+      font-size: 0.65rem !important;
+      line-height: 1.15 !important;
+      word-break: break-word !important;
     }
     #shopify-section-{{ section.id }} .price-list {
-      font-size: 0.7rem;
+      font-size: 0.65rem !important;
     }
   }
 </style>
