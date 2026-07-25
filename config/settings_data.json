@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "icon_stroke_width": 1,
@@ -38,16 +47,16 @@
     "cart_type": "drawer",
     "cart_icon": "shopping_bag_sharp",
     "cart_free_shipping_threshold": "50",
-    "social_facebook": "https:\/\/www.facebook.com\/100071242935350\/",
-    "social_pinterest": "https:\/\/pin.it\/3FtCfaM",
-    "social_instagram": "https:\/\/www.instagram.com\/bawse_official\/",
-    "favicon": "shopify:\/\/shop_images\/IMG_2238_4.jpg",
+    "social_facebook": "https://www.facebook.com/100071242935350/",
+    "social_pinterest": "https://pin.it/3FtCfaM",
+    "social_instagram": "https://www.instagram.com/bawse_official/",
+    "favicon": "shopify://shop_images/IMG_2238_4.jpg",
     "sections": {
       "newsletter": {
         "type": "newsletter",
         "settings": {
           "title": "JOIN THE CLUB.",
-          "content": "<p>Carbon Neutral Shipping | Easy Exchanges | Ships within 24 hours<\/p>"
+          "content": "<p>Carbon Neutral Shipping | Easy Exchanges | Ships within 24 hours</p>"
         }
       },
       "footer": {
@@ -69,7 +78,7 @@
             "type": "text",
             "settings": {
               "title": "NEED HELP?",
-              "content": "<p>Carbon Neutral Shipping | Easy Exchanges | Ships within 24 hours<\/p>"
+              "content": "<p>Carbon Neutral Shipping | Easy Exchanges | Ships within 24 hours</p>"
             }
           },
           "9d66d83a-7fae-4703-ab7f-73c5e8d23b5d": {
@@ -101,7 +110,7 @@
           "bf2a8bdd-7937-47d6-b053-a2518c33b293"
         ],
         "settings": {
-          "logo": "shopify:\/\/shop_images\/Bawse_Logo_26.04.23.png",
+          "logo": "shopify://shop_images/Bawse_Logo_26.04.23.png",
           "logo_max_width": 200,
           "show_icons": true,
           "show_locale_selector": true
@@ -111,52 +120,11 @@
         "type": "collection-list",
         "settings": {
           "image_size": "normal",
-          "content": "<p>Carbon Neutral Shipping | Easy Exchanges | Ships within 24 hours<\/p>"
+          "content": "<p>Carbon Neutral Shipping | Easy Exchanges | Ships within 24 hours</p>"
         }
       }
     },
     "content_for_index": [],
-    "blocks": {
-      "judgeme_core_c932cb59": {
-        "type": "shopify:\/\/apps\/judge-me-product-reviews\/blocks\/judgeme_core\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": false,
-        "settings": {}
-      },
-      "15683396631634586217": {
-        "type": "shopify:\/\/apps\/inbox\/blocks\/chat\/841fc607-4181-4ad1-842d-e24d7f8bad6b",
-        "disabled": true,
-        "settings": {
-          "greeting_message": "",
-          "button_color": "#0F382C",
-          "secondary_color": "#ffffff",
-          "ternary_color": "#6a6a6a",
-          "button_icon": "chat_bubble",
-          "button_text": "chat_with_us",
-          "button_horizontal_position": "bottom_right",
-          "button_vertical_position": "lowest"
-        }
-      },
-      "4015264832934714879": {
-        "type": "shopify:\/\/apps\/ecomsend-popups\/blocks\/app\/a5670cf8-5705-4b01-ad9e-447033feae26",
-        "disabled": false,
-        "settings": {}
-      },
-      "18423266570658624584": {
-        "type": "shopify:\/\/apps\/best-currency-converter\/blocks\/doubly\/267afa86-a419-4d5b-a61b-556038e7294d",
-        "disabled": false,
-        "settings": {}
-      },
-      "10003540932433742857": {
-        "type": "shopify:\/\/apps\/addly-bundle-upsell\/blocks\/addly-embed\/ba93f155-a558-4082-82dd-21b22b27b698",
-        "disabled": false,
-        "settings": {}
-      },
-      "4981902369724952902": {
-        "type": "shopify:\/\/apps\/vo-product-options\/blocks\/embed-block\/430cbd7b-bd20-4c16-ba41-db6f4c645164",
-        "disabled": false,
-        "settings": {}
-      }
-    },
     "color_schemes": {
       "scheme-1": {
         "settings": {
